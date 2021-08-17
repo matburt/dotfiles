@@ -1,0 +1,80 @@
+# ----- protonmail ------
+IMAPAccount protonmail
+Host joneses.id
+Port 1143
+User matthew@matthew.id
+PassCmd "rbw get imap.protonmail"
+SSLType NONE
+
+IMAPStore remote-proton
+Account protonmail
+
+MaildirStore local-proton
+Path ~/.mail/protonmail/
+Inbox ~/.mail/protonmail/INBOX/
+
+Channel proton-inbox
+Master :remote-proton:
+Slave :local-proton:
+Patterns *
+Create Slave
+Expunge Both
+SyncState *
+
+Group protonmail
+Channel proton-inbox
+
+# ---- OGS -----
+
+IMAPAccount matburtogs
+Host imap.gmail.com
+User matburt@online-go.com
+PassCmd "rbw get imap.ogs"
+SSLType IMAPS
+
+IMAPStore matburtogs-remote
+Account matburtogs
+
+MaildirStore matburtogs-local
+Subfolders Verbatim
+Path ~/.mail/ogs/
+Inbox ~/.mail/ogs/Inbox
+Trash [Gmail]/Trash
+
+Channel matburtogs
+Master :matburtogs-remote:
+Slave :matburtogs-local:
+Patterns * ![Gmail]* "[Gmail]/Sent Mail" "[Gmail]/Starred" "[Gmail]/All Mail"
+Create Both
+SyncState *
+Expunge Both
+MaxMessages 1000
+ExpireUnread no
+
+# ------ RedHat ------
+
+IMAPAccount redhat
+# Address to connect to
+Host imap.gmail.com
+User majones@redhat.com
+PassCmd "rbw get imap.redhat"
+SSLType IMAPS
+
+IMAPStore redhat-remote
+Account redhat
+
+MaildirStore redhat-local
+Subfolders Verbatim
+Path ~/.mail/redhat/
+Inbox ~/.mail/redhat/Inbox
+Trash [Gmail]/Trash
+
+Channel redhat
+Master :redhat-remote:
+Slave :redhat-local:
+Patterns * ![Gmail]* "[Gmail]/Sent Mail" "[Gmail]/Starred" "[Gmail]/All Mail"
+Create Both
+Expunge Both
+SyncState *
+MaxMessages 1000
+ExpireUnread no
