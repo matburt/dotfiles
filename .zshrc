@@ -1,4 +1,4 @@
-export ZSH="/home/mjones/.oh-my-zsh"
+export ZSH="$HOME/.oh-my-zsh"
 
 # WSL
 # export DISPLAY=$(cat /etc/resolv.conf | grep nameserver | awk '{print $2; exit;}'):0.0
