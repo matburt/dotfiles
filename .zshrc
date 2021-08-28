@@ -10,12 +10,7 @@ setopt SHARE_HISTORY
 setopt APPEND_HISTORY
 setopt hist_ignore_all_dups
 
-export PATH=$PATH:~/.poetry/bin:~/go/bin
-export PYENV_ROOT="$HOME/.pyenv"
-export PATH="$PYENV_ROOT/bin:$HOME/go/bin:$HOME/bin:$PATH"
-
 export LESS=FRSXQ
-
 export FZF_DEFAULT_OPTS='--height 40% --layout=reverse --border'
 export FZF_DEFAULT_COMMAND='ag --hidden --follow'
 
