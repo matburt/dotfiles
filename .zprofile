@@ -1,6 +1,5 @@
-
-export PATH="$HOME/.poetry/bin:$HOME/.cargo/bin:$PYENV_ROOT/bin:$PATH"
 export PYENV_ROOT="$HOME/.pyenv"
+export PATH="$HOME/.poetry/bin:$HOME/.cargo/bin:$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init --path)"
 
 # Auto-start ssh-agent
