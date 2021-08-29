@@ -15,7 +15,7 @@ export FZF_DEFAULT_OPTS='--height 40% --layout=reverse --border'
 export FZF_DEFAULT_COMMAND='ag --hidden --follow'
 
 ZSH_THEME="lukerandall"
-plugins=(git fzf python pyenv kubectl)
+plugins=(git fzf pyenv kubectl)
 source $ZSH/oh-my-zsh.sh
 
 if [[ -n $SSH_CONNECTION ]]; then

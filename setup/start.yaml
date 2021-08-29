@@ -1,0 +1,40 @@
+---
+- name: Setup homedir
+  hosts: all
+  tasks:
+  # pyenv probably
+    - name: Make sure fzf is present
+      git:
+        repo: https://github.com/junegunn/fzf.git
+        depth: 1
+        dest: ~/.fzf
+        version: HEAD
+      register: fzf_result
+    - name: Install or upgrade fzf
+      shell:
+        cmd: ~/.fzf/install
+      when: fzf_result.before != fzf_result.after
+    - name: Check for rustup
+      stat:
+        path: ~/.cargo/bin/rustup
+      register: rustup_exists
+    - name: Install rust/rustup
+      shell:
+        cmd: curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+      when: not rustup_exists.stat.exists
+    - name: Upgrade rustup
+      shell:
+        cmd: rustup self update
+      when: rustup_exists.stat.exists
+    - name: Install 1.3.0 rbw release deb
+      apt:
+        deb: https://git.tozt.net/rbw/releases/deb/rbw_1.3.0_amd64.deb
+      become: true
+    - name: Configure rbw url if value supplied
+      shell:
+        cmd: rbw config set base_url {{ bw_base_url }}
+      when: bw_base_url is defined
+    - name: Configure rbw user if value supplied
+      shell:
+        cmd: rbw config set email {{ bw_email }}
+      when: bw_email is defined
