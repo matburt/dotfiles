@@ -42,3 +42,7 @@ function bwg() {
 function bwc() {
   rbw code $1
 }
+
+function rwvpn() {
+  { bwg redhat & bwc redhat } | tr -d '\n '
+}
