@@ -3,6 +3,10 @@
   hosts: all
   tasks:
   # pyenv probably
+    - name: ssh keys
+      ansible.posix.authorized_key:
+        user: mjones
+        key: https://github.com/matburt.keys
     - name: Make sure fzf is present
       git:
         repo: https://github.com/junegunn/fzf.git
@@ -26,15 +30,20 @@
       shell:
         cmd: rustup self update
       when: rustup_exists.stat.exists
+    - name: Check for rbw
+      stat:
+        path: ~/.cargo/bin/rbw
+      register: rbw_exists
     - name: Install 1.3.0 rbw release deb
       apt:
         deb: https://git.tozt.net/rbw/releases/deb/rbw_1.3.0_amd64.deb
       become: true
+      when: not rbw_exists.stat.exists
     - name: Configure rbw url if value supplied
       shell:
         cmd: rbw config set base_url {{ bw_base_url }}
-      when: bw_base_url is defined
+      when: bw_base_url is defined and not rbw_exists.stat.exists
     - name: Configure rbw user if value supplied
       shell:
         cmd: rbw config set email {{ bw_email }}
-      when: bw_email is defined
+      when: bw_email is defined and not rbw_exists.stat.exists
